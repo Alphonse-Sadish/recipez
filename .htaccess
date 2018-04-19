@@ -1,0 +1,13 @@
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !^/index.php$
+#RewriteRule .*\.(php|html)$ /index.php [L,R=302]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ /index.php?path=$1 [NC,L,QSA]
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php [L,QSA]
