@@ -7,6 +7,7 @@ class Step extends BaseSQL {
 	protected $step;
 	protected $recipe_id;
 	protected $created_at;
+	protected $deactivated;
 
 	public function __construct() {
 	    parent::__construct();
@@ -24,7 +25,7 @@ class Step extends BaseSQL {
 
     public function setText($text)
     {
-        $this->text = $text;
+        $this->text = trim(strtolower(addslashes($text)));
     }
 
     public function getStep()
@@ -34,7 +35,7 @@ class Step extends BaseSQL {
 
     public function setStep($step)
     {
-        $this->step = $step;
+        $this->step = trim(addslashes(strtolower($step)));
     }
 
     public function getRecipeId()
@@ -44,29 +45,19 @@ class Step extends BaseSQL {
 
     public function setRecipeId($recipe_id)
     {
-        $this->recipe_id = $recipe_id;
+        $this->recipe_id = trim($recipe_id);
     }
-
-    public function getCreatedAt()
-    {
+    public function getCreated(){
         return $this->created_at;
     }
-
-    public function setCreatedAt($created_at)
-    {
-        $this->created_at = $created_at;
+    public function setCreated(){
+        $this->created_at = date("Ymd");
     }
-
-	public function findStepsByRecipeId($recipeId) {
-		$sql = <<<SQL
-			SELECT s.text, s.step
-			FROM step s 
-			WHERE s.recipe_id = :id
-SQL;
-		$stmt = $this->pdo->prepare($sql);
-		$stmt->execute(['id' => $recipeId]);
-		return $stmt->fetchAll();
+    public function getDeactivated(){
+        return $this->deactivated;
     }
-
+    public function setDeactivated(){
+        $this->deactivated = date("Ymd");
+    }
 
 }
