@@ -12,7 +12,7 @@ class User extends BaseSQL{
 	public function __construct(){
 		parent::__construct();
 	}
-
+ 
 	public function setId($id){
 		$this->id = $id;
 	}
