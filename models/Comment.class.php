@@ -7,31 +7,22 @@ class Comment extends BaseSQL {
 	protected $author_id;
 	protected $recipe_id;
 	protected $created_at;
+	protected $deactivated;
 
 	public function __construct() {
 	    parent::__construct();
 	}
+    public function getId() {
+        return $this->id;
+    }
 
 	public function getText() {
 		return $this->text;
 	}
 
-	public function setText( $text ) {
-		$this->text = $text;
+	public function setText($text) {
+		$this->text = trim(addslashes($text));
 	}
-
-	public function getCreatedAt() {
-		return $this->created_at;
-	}
-
-	public function setCreatedAt( $createdAt ) {
-		$this->created_at = $createdAt;
-	}
-
-	public function getId() {
-		return $this->id;
-	}
-
     public function getAuthorId()
     {
         return $this->author_id;
@@ -39,7 +30,7 @@ class Comment extends BaseSQL {
 
     public function setAuthorId($author_id)
     {
-        $this->author_id = $author_id;
+        $this->author_id = trim($author_id);
     }
 
     public function getRecipeId()
@@ -49,36 +40,20 @@ class Comment extends BaseSQL {
 
     public function setRecipeId($recipe_id)
     {
-        $this->recipe_id = $recipe_id;
+        $this->recipe_id = trim($recipe_id);
     }
-
-    public function getDeletedAt()
-    {
-        return $this->deleted_at;
+    public function getCreated(){
+        return $this->created_at;
     }
-
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deleted_at = $deletedAt;
+    public function setCreated(){
+        $this->created_at = date("Ymd");
     }
-
-
-	public function findByRecipe($recipeId) {
-		$sql = "
-				SELECT c.id, c.text, c.author_id, c.created_at, u.firstname as author
-				FROM comment c
-				JOIN user u ON c.author_id = u.id
-				WHERE c.recipe_id = :id
-				";
-		$stmt = $this->pdo->prepare($sql);
-		$stmt->execute(['id' => $recipeId]);
-		return $stmt->fetchAll();
+    public function getDeactivated(){
+        return $this->deactivated;
     }
-
-
-
-
-
+    public function setDeactivated(){
+        $this->deactivated = date("Ymd");
+    }
 
 
 }
