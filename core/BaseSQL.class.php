@@ -7,10 +7,10 @@ class BaseSQL{
 
 	public function __construct(){
 		try{
-			$this->pdo = new PDO(DBDRIVER.":host=".DBHOST.";port=3306;dbname=".DBNAME, DBUSER, DBPWD,
+			$this->pdo = new PDO(DBDRIVER.":host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME, DBUSER, DBPWD,
 				[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 		}catch(Exception $e){
-			die(var_dump($this->pdo)."Erreur SQL :".$e->getMessage());
+			die("Erreur SQL :".$e->getMessage());
 		}
 		$this->table = strtolower(get_called_class());
 	}
