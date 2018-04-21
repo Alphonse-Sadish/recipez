@@ -3,6 +3,7 @@
 class Recipe extends BaseSQL {
 
     protected $id;
+    protected $name;
     protected $preparation_time;
     protected $bake_time;
     protected $nb_guests;
@@ -112,4 +113,43 @@ class Recipe extends BaseSQL {
     {
         $this->deleted_at = $deleted_at;
     }
+
+	public function getName() {
+		return $this->name;
+	}
+
+	public function setName( $name ) {
+		$this->name = $name;
+	}
+
+
+
+	public function findById($recipeId = 1) {
+    	$sql = <<<SQL
+ 				SELECT r.name, r.bake_time, r.preparation_time, r.difficulty, r.img_url, r.nb_guests, r.plate_type 
+				FROM recipe r
+				WHERE r.id = :id
+SQL;
+    	$stmt = $this->pdo->prepare($sql);
+    	$stmt->execute(['id' => $recipeId]);
+    	return $stmt->fetch();
+    }
+
+	public function findRecipeUnit($recipeId) {
+		$sql = <<<SQL
+				SELECT ru.quantity, i.name as ingredient_name, i.img_url, IF(ru.quantity > 1, u.plural_name, u.name ) as unit_name
+				FROM recipe_unit ru
+			    JOIN ingredient i ON ru.ingredient_id = i.id
+				JOIN unit u ON ru.unit_id = u.id
+				WHERE ru.recipe_id = :id
+SQL;
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute(['id' => $recipeId]);
+		return $stmt->fetchAll();
+
+
+
+    }
+    
+ 
 }

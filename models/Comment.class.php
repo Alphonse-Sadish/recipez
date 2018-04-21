@@ -7,7 +7,6 @@ class Comment extends BaseSQL {
 	protected $author_id;
 	protected $recipe_id;
 	protected $created_at;
-	protected $deleted_at;
 
 	public function __construct() {
 	    parent::__construct();
@@ -69,8 +68,11 @@ class Comment extends BaseSQL {
 				SELECT c.id, c.text, c.author_id, c.created_at, u.firstname as author
 				FROM comment c
 				JOIN user u ON c.author_id = u.id
+				WHERE c.recipe_id = :id
 				";
-		return $this->pdo->query($sql)->fetchAll();
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute(['id' => $recipeId]);
+		return $stmt->fetchAll();
     }
 
 

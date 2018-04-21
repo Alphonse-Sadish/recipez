@@ -21,11 +21,11 @@
                                 <li><i class="fas fa-signal"></i>Difficulté</li>
                             </ul>
                             <ul class="recipe__infos__general__values">
-                                <li>30 minutes</li>
-                                <li>10 minutes</li>
-                                <li>3 personnes</li>
-                                <li>Entrée</li>
-                                <li>Moyen</li>
+                                <li><?php echo $recipe['preparation_time']?> minutes</li>
+                                <li><?php echo $recipe['bake_time']?> minutes</li>
+                                <li><?php echo $recipe['nb_guests']?> <?php echo $recipe['nb_guests'] > 1 ? 'personnes' : 'personne' ?></li>
+                                <li><?php echo ucfirst($recipe['plate_type'])?></li>
+                                <li><?php echo ucfirst($recipe['difficulty'])?></li>
                             </ul>
                         </div>
                     </div>
@@ -35,83 +35,16 @@
                         <h1 class="recipe__infos__title">Ingredients</h1>
                         <div class="recipe__infos__ingredients">
                             <div class="ingredient row">
+	                            <?php foreach ( $recipeUnits as $recipeUnit ) : ?>
+<!--		                            --><?php //var_dump('../../'.$recipeUnit['img_url']) ?>
                                 <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/filet_poulet.jpg" alt="" class="ingredient__img">
+                                    <img src="<?php echo DIRNAME.''.$recipeUnit['img_url'] ?>" alt="" class="ingredient__img">
                                     <div>
-                                        <p class="name">Filet de poulet</p>
-                                        <p class="unit">2 unités</p>
+                                        <p class="name"><?php echo $recipeUnit['ingredient_name']?></p>
+                                        <p class="unit"><?php echo $recipeUnit['quantity'].' '.$recipeUnit['unit_name'] ?></p>
                                     </div>
                                 </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/laitue.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Laitue Iceberg</p>
-                                        <p class="unit">1 unités</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/huile_olive.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Huilde d'olive</p>
-                                        <p class="unit">20 cl</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/mayonnaise.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Mayonnaise</p>
-                                        <p class="unit">6 cuillères à soupe</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/lait.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Lait</p>
-                                        <p class="unit">1 cuillères à soupe</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/jus_citron.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Jus de citron</p>
-                                        <p class="unit">1 cuillères à soupe</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/parmesan_rape.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Parmesan râpé</p>
-                                        <p class="unit">6 cuillères à café</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/moutarde_dijon.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Moutarde de Dijon</p>
-                                        <p class="unit">6 cuillères à café</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/gousse_ail.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Gousse d'ail</p>
-                                        <p class="unit">1 unité</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/sel.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Sel</p>
-                                        <p class="unit">1 cuillères à café</p>
-                                    </div>
-                                </div>
-                                <div class="col-6 ingredient__item">
-                                    <img src="../../public/img/ingredients/poivre.jpg" alt="" class="ingredient__img">
-                                    <div>
-                                        <p class="name">Poivre</p>
-                                        <p class="unit">1 cuillères à café</p>
-                                    </div>
-                                </div>
+	                            <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -120,46 +53,16 @@
                     <div class="recipe__infos__steps__wrap mb20">
                         <p class="recipe__infos__title">Etapes</p>
                         <div class="row">
+                            <?php foreach ( $steps as $step ) : ?>
                             <div class="step col-12">
                                 <div class="step__number">
-                                    <div class="number"><span>1</span></div>
+                                    <div class="number"><span><?php echo $step['step']?></span></div>
                                 </div>
                                 <div class="step__instruction">
-                                    <p>Une heure avant le repas. Mélanger tous les ingrédients de la sauce. Filmer et laisser reposer une heure au réfrigérateur</p>
+                                    <p><?php echo $step['text'] ?></p>
                                 </div>
                             </div>
-                            <div class="step col-12">
-                                <div class="step__number">
-                                    <div class="number"><span>2</span></div>
-                                </div>
-                                <div class="step__instruction">
-                                    <p>Couper les tranches de pain en cube. Faire revenir les croûtons dans un filet d’huile d’olive pendant 2 minutes et laisser refroidir</p>
-                                </div>
-                            </div>
-                            <div class="step col-12">
-                                <div class="step__number">
-                                    <div class="number"><span>3</span></div>
-                                </div>
-                                <div class="step__instruction">
-                                    <p>Couper le poulet en petits morceaux et faire cuire dans une poêle anti-ahésive sans matière grasse. Faire dorer et laisser refroidir.</p>
-                                </div>
-                            </div>
-                            <div class="step col-12">
-                                <div class="step__number">
-                                    <div class="number"><span>4</span></div>
-                                </div>
-                                <div class="step__instruction">
-                                    <p>Déchirer la laitue en petits morceaux</p>
-                                </div>
-                            </div>
-                            <div class="step col-12">
-                                <div class="step__number">
-                                    <div class="number"><span>5</span></div>
-                                </div>
-                                <div class="step__instruction">
-                                    <p>Dresser dans l’ordre : salade, poulet, croûtons et sauce César</p>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
@@ -173,7 +76,6 @@
                             <div class="comment__text">
                                 <p class="text" id="comment-<?php echo $comment['id']?>"><?php echo $comment['text'] ?></p>
                             </div>
-                            <a href="<?php echo DIRNAME;?>comment/<?php echo $comment['id']?>/edit">Editer</a>
                         </div>
                         <?php endforeach; ?>
 

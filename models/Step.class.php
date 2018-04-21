@@ -57,4 +57,16 @@ class Step extends BaseSQL {
         $this->created_at = $created_at;
     }
 
+	public function findStepsByRecipeId($recipeId) {
+		$sql = <<<SQL
+			SELECT s.text, s.step
+			FROM step s 
+			WHERE s.recipe_id = :id
+SQL;
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute(['id' => $recipeId]);
+		return $stmt->fetchAll();
+    }
+
+
 }
